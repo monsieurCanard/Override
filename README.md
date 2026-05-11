@@ -2,11 +2,11 @@
 Learn how to exploit buffer overflow
 
 
-#Level00
+# Level00
 
 Le plus simple des levels, il faut simplement decommpiler le binaire (personnellement j'ai utilisé le site dogbold). Il suffit de chercher le moment ou le code verifie le mot de passe et de le trouver.
 
-#Level01
+# Level01
 
 On rentre un plus dans le buffer overflow, on decomile le binaire et on remarque que les recuprations d'input se font sur des buffers gigantesques pour le username et le mot de passe attendu par le programme. Il va donc falloir inserer un shell code dans le buffer du username, placer l'adresse du shell code dans le buffer du mot de passe. 
 
@@ -41,7 +41,7 @@ print password
 > Pour trouver le bon padding pour se placer sur l'adresse EIP (adresse de retour), j'ai utilisé le tatonnement, en augmentant le padding de 10 en 10 jusqu'a trouver la bonne valeur.
 
 
-#Level01 - V2
+# Level01 - V2
 
 A force de faire des recherches sur internet j'ai finalement decouvert la librairy pwntools qui facilite grandement l'exploitation de ce genre de vulnérabilite. J'ai donc decidé de refaire le level01 en utilisant cette librairie.
 
@@ -69,7 +69,7 @@ prog.interactive()
 Pour l'instant j'ai pu utiliser string pour acceder a l'adresse ou est stocké le username (car c'est stocké dans une variable globale), mais je sens que je vais bientot devoir utiliser GDB. 
 
 
-#level02
+# level02
 
 Le level02 est aussi un buffer overflow, si on decompile le code on remarque que si l'utilisateur rate son input et reaffiche son input avec printf.
 Il faut donc se demander comment a partir du printf on peut accéder a la variable qui stocke le retour de read et donc le mot de passe.
@@ -78,7 +78,7 @@ Il suffit de ne pas oublier que l'on est en est en little endian et que les cara
 
 
 
-#level03
+# level03
 
 Pour de niveau on sort un peu du buffer overflow pour revenir sur un reverse engineering sur un binaire.
 En le decompilant on void que le programme utilise la fonction decrypt qui va utiliser mon input pour faire un xor dessus pour verifier si il est egale a "Congratulations".
@@ -89,7 +89,7 @@ Du coup on doit trouver x tel que (322424845 - x) XOR "Q}|u`sfg~sf{}|a3" = "Cong
 Par logique on peut donc trouver x en faisant 81(nb ascii de Q) XOR 67(nb ascii de C) = 18, et ensuite en faisant 322424845 - 18 on trouve le bon nombre pour la suite du code : 322424831.
 
 
-#level04
+# level04
 
 Le niveau 04 a été ma premiere grande barriere dans ce projet pour l'instant. Le niveau est tres proche du niveau 02, on a un gets qui n'a pas de limite de buffer.
 CEPENDAAANT, le programme utilise un proessus enfant pour recupérer les inputs et utitlise egalemment un ptrace pour verifier que le processus enfant n'execute pas de execve pour eviter que l'on puisse faire un shellcode classique pour avoir un shell.
@@ -154,7 +154,7 @@ Y'a plus cas execute le code et le rediriger dans un fichier et executer cette c
 ```
 
 
-#level05
+# level05
 
 Alors la, premier gros mur. Le code decompiler nous fait comprendre que la faille est dans une suite de printf d'un buffer d'input suivi d'un exit.
 Du coup faut trouver un moyen de "remplacer" le exit par un system("/bin/sh") pour avoir un shell.
@@ -204,7 +204,7 @@ python -c 'print "\xe0\x97\x04\x08" + "\xe2\x97\x04\x08" + "%33331x" + "%10$n" +
 ```
 
 
-#level07
+# level07
 
 Petit pause sur les buffers overflows ^^ La on decompile le binaire et on comprend vite que le prog chercher a trouver un chiffre qui correspond a la fin d'une suite d'operations mathématiques sur notre premier input.
 
