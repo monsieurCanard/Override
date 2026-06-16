@@ -35,7 +35,14 @@ lrwxrwxrwx  1 root    root       7 Sep 13  2016 .bash_profile -> .bashrc
 6. Decompiler Explorer: Go to this link and attach file of level00 to get the password of 5276
 https://dogbolt.org/?id=d2ff384a-ea37-4370-9ae5-4814118e5725
 
-7. Password:5276
+7. ./level00
+
+8. Password:5276
 Authenticated!
-8. cat /home/users/level01/.pass
+
+9. cat /home/users/level01/.pass
 uSq2ehEGT6c9S24zbshexZQBXUGrncxn5sD5QfGL
+
+10. su level01
+paste password: uSq2ehEGT6c9S24zbshexZQBXUGrncxn5sD5QfGL
+
